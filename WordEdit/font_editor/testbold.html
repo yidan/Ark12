@@ -1,0 +1,25 @@
+<html>
+<head>
+<title> Using execCommand to bold text </title>
+<script language="JavaScript">
+
+  function Init()
+  {
+    iView.document.designMode = 'On';    
+  }
+
+  function boldIt()
+  {
+    iView.document.execCommand('bold', false, null);
+    iView.document.execCommand('InsertSelectDropDown', false, null);
+  }
+
+</script>
+
+<body onLoad="Init()">
+	<iframe id="iView" style="width: 200px; height:70px"></iframe>
+	<br><br>
+	<input type="button" onClick="boldIt()" value="Toggle Bold">
+</body>
+</html>
+

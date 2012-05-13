@@ -1,0 +1,135 @@
+<html>
+<head>
+<title> Browser Based HTML Editor </title>
+<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
+<script type="text/javascript" src="js/colorpicker.js"></script>
+<script type="text/javascript" src="js/font_editor.js"></script>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+
+  <link type="text/css" rel="stylesheet" href="css/style.css" />
+
+  <link type="text/css" rel="stylesheet" href="css/jfontsize.css" />
+
+  <link type="text/css" rel="stylesheet" href="css/shCoreDefault.css" />
+
+<script type="text/javascript" language="javascript" src="js/jquery-1.5.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/jquery.jfontsize-1.0.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/jquery.corner-2.09.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/shCore.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/shBrushJScript.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/shBrushXml.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/shBrushCss.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/funcoes.js"></script>
+
+
+
+                    <script type="text/javascript" language="javascript">
+
+                        $('.iView').jfontsize({
+
+                            btnMinusClasseId: '#jfontsize-m',
+
+                            btnDefaultClasseId: '#jfontsize-d',
+
+                            btnPlusClasseId: '#jfontsize-p'
+
+                        });
+
+                    </script>
+
+<style>
+
+  .butClass
+  {    
+    border: 1px solid;
+    border-color: #D6D3CE;
+  }
+  
+  .tdClass
+  {
+    padding-left: 3px;
+    padding-top:3px;
+  }
+
+</style>
+
+<body onLoad="Init()">
+	<table id="tblCtrls" width="415px" height="30px" border="0" cellspacing="0" cellpadding="0" bgcolor="#D6D3CE">	
+	<tr>
+		<td class="tdClass">
+			<img alt="Bold" class="butClass" src="bold.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doBold()">
+			<img alt="Italic" class="butClass" src="italic.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doItalic()">
+			<img alt="Underline" class="butClass" src="underline.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doUnderline()">
+			
+			<img alt="Left" class="butClass" src="left.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doLeft()">
+			<img alt="Center" class="butClass" src="center.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doCenter()">
+			<img alt="Right" class="butClass" src="right.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doRight()">
+						
+			<img alt="Ordered List" class="butClass" src="ordlist.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doOrdList()">
+			<img alt="Bulleted List" class="butClass" src="bullist.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doBulList()">
+			
+			<img alt="Text Color" class="butClass" src="forecol.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doForeCol()">
+			<img alt="Background Color" class="butClass" src="bgcol.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doBackCol()">
+			
+			<img alt="Hyperlink" class="butClass" src="link.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doLink()">
+			<img alt="Image" class="butClass" src="image.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doImage()">
+			<img alt="Horizontal Rule" class="butClass" src="rule.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doRule()">
+			
+		</td>
+	</tr>
+	</table>
+	<iframe  id="iView" style="width: 415px; height:205px"></iframe>
+
+    <table width="415px" height="30px" border="0" cellspacing="0" cellpadding="0" bgcolor="#D6D3CE">	
+    <tr>
+		<td class="tdClass" colspan="1" width="80%">
+		  <select name="selFont" onChange="doFont(this.options[this.selectedIndex].value)">
+		    <option value="">-- Font --</option>
+		    <option value="Arial">Arial</option>
+		    <option value="Courier">Courier</option>
+		    <option value="Sans Serif">Sans Serif</option>
+		    <option value="Tahoma">Tahoma</option>
+		    <option value="Verdana">Verdana</option>
+		    <option value="Wingdings">Wingdings</option>
+		  </select>
+		  <select name="selSize" onChange="doSize(this.options[this.selectedIndex].value)">
+		    <option value="">-- Size --</option>
+		    <option value="1" >Very Small</option>
+		    <option value="2" >Small</option>
+		    <option value="3" >Medium</option>
+		    <option value="4" >Large</option>
+		    <option value="5" >Larger</option>
+		    <option value="6" >Very Large</option>
+		  </select>
+                    <a class="jfontsize-button" id="jfontsize-m" href="javascript:;" onClick="decSize()">A-</a>
+
+                    <a class="jfontsize-button" id="jfontsize-d" href="javascript:;" onClick="addClass()">A</a>
+
+                    <a class="jfontsize-button" id="jfontsize-p" href="javascript:; " onClick="addClass()h">A+</a>
+
+		  <select name="selHeading" onChange="doHead(this.options[this.selectedIndex].value)">
+		    <option value="">-- Heading --</option>
+		    <option value="Heading 1">H1</option>
+		    <option value="Heading 2">H2</option>
+		    <option value="Heading 3">H3</option>
+		    <option value="Heading 4">H4</option>
+		    <option value="Heading 5">H5</option>
+		    <option value="Heading 6">H6</option>
+		  </select>
+		</td>
+		<td class="tdClass" colspan="1" width="20%" align="right">
+		  <img alt="Toggle Mode" class="butClass" src="mode.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doToggleView()">
+		  &nbsp;&nbsp;&nbsp;
+		</td>
+    </tr>
+    </table>
+</body>
+</html>
+
