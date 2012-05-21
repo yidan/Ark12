@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+
+		<title>Ark12 online editor</title>
+
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<link rel="stylesheet" type="text/css" href="samples.css" />
+
+		<link rel="stylesheet" type="text/css" href="font.css" />
+		<script>
+
+			window.onload=function()
+
+			{
+
+				function makeWYSIWYG(editor)
+
+				{
+
+					//If the DOM element exists
+
+					if(editor)
+
+					{
+
+						//create the buttons container
+
+						var buttons_container = document.createElement('div');
+
+						
+
+						//define some properties to it...
+
+						buttons_container.style.textAlign='center';
+
+						buttons_container.style.marginTop='5px';
+
+						buttons_container.className='makeWYSIWYG_buttons_container';
+
+						
+
+						//create the buttons inside the container
+
+						buttons_container.innerHTML=''+
+
+							'<button class="makeWYSIWYG_editButton">Edit</button>'+
+
+							'<button class="makeWYSIWYG_viewHTML">View HTML</button>'+
+
+							'<div class="makeWYSIWYG_buttons" style="display: none;">'+
+								
+						'<select data-tag="font" ><option value=""> --Font--</option> <option value="Georgia"> Georgia </option> <option value="GoodDog"> <p style="font-family:GoodDog"> GoodDog </p> </option> <option value="Arial"> Arial </option></select>'  +
+						'<select data-tag="font size"> <option value = ""> -Font Size-</option> <option value= "6"> Very Large </option> <option value= "5"> Large</option><option value= "4"> Medium </option><option value= "3"> Small</option><option value= "2"> Very Small </option> </select>'+									
+					        '<select data-tag="font color"> <option value = " "> -Font Color -</option> <option value="red"> Red </option><option value="green"> Green </option> </select>' +
+						'<select data-tag="highlight color"> <option value = " "> -Highlight Color -</option> <option value="red"> Red </option><option value="green"> Green </option> </select>' +					 
+
+								'<button data-tag="bold"><b>Bold</b></button>'+
+
+								'<button data-tag="italic"><em>Italic</em></button>'+
+
+								'<button data-tag="underline"><ins>Underline</ins></button>'+
+
+								'<button data-tag="strikeThrough"><del>Strike</del></button>'+
+
+								'<button data-tag="insertUnorderedList">&bull; Unordered List</button>'+
+
+								'<button data-tag="insertOrderedList">1. Ordered List</button>'+
+
+								'<button data-tag="createLink"><ins style="color: blue;">Link</ins></button>'+
+
+								'<button data-tag="insertImage">Image</button>'+
+
+								'<button data-value="h1" data-tag="heading">Main title</button>'+
+
+								'<button data-value="h2" data-tag="heading">Subtitle</button><br />'+
+
+								'<button data-tag="removeFormat">Remove format</button>'+
+
+							'</div>';
+
+							
+
+						//insert the buttons after the editor
+
+						var parent = editor.parentNode;
+
+
+
+						if(parent.lastchild == editor)
+
+						{
+
+							parent.appendChild(buttons_container);
+
+						}
+
+						else
+
+						{
+
+							parent.insertBefore(buttons_container, editor.nextSibling);
+
+						}
+
+						//by default, the element is not editable
+
+						editor.isEditable=false; 
+
+						editor.setAttribute('contenteditable', false);
+
+						
+
+						//permits to make the element editable or not
+
+						editor.makeEditable = function(bool)
+
+						{
+
+							//protect the value
+
+							bool = bool==undefined?true:(typeof bool === 'boolean'?bool:true);
+
+							
+
+							//change the editable state
+
+							this.isEditable=bool;
+
+							this.setAttribute('contenteditable',bool);
+
+							
+
+							//show/hide the buttons
+
+							if(bool)
+
+							{
+
+								buttons_container.querySelector('.makeWYSIWYG_buttons').style.display='block';
+
+							}
+
+							else
+
+							{
+
+								buttons_container.querySelector('.makeWYSIWYG_buttons').style.display='none';
+
+							}
+
+						};
+
+							
+
+						//click on the "Edit" button
+
+						buttons_container.querySelector('.makeWYSIWYG_editButton').addEventListener('click',function(e)
+
+						{
+
+							if(editor.isEditable)
+
+							{
+
+								editor.makeEditable(false);
+
+								this.innerHTML='Edit';
+
+							}
+
+							else
+
+							{
+
+								editor.makeEditable(true);
+
+								this.innerHTML='Save';
+
+							}
+
+							e.preventDefault();
+
+						},false);
+
+						
+
+						//click on the "View HTML" button
+
+						buttons_container.querySelector('.makeWYSIWYG_viewHTML').addEventListener('click',function(e)
+
+						{
+
+							alert(editor.innerHTML);
+
+							e.preventDefault();
+
+						},false);
+
+						//get font dropdown lists
+						var editfont = buttons_container.querySelectorAll('select[data-tag]');
+						for (var i=0, l=editfont.length; i<l; i++)
+						
+						{
+							editfont[i].addEventListener('change', function(e)
+							{
+								var tag= this.getAttribute('data-tag');
+								switch(tag)
+								{
+									case 'font':
+									   document.execCommand('fontname',false,this.options[this.selectedIndex].value);
+									   break;
+									case 'font color':
+								           document.execCommand('forecolor',false,this.options[this.selectedIndex].value);
+									   break;
+									case 'highlight color':
+									   document.execCommand('backcolor',false,this.options[this.selectedIndex].value);
+                                                                           break;									   
+									case 'font size':
+									   document.execCommand('fontsize',false, this.options[this.selectedIndex].value);
+							        }
+								 e.preventDefault();
+						         });
+							
+							
+					        }
+						
+			
+						//get the format buttons
+
+						var buttons = buttons_container.querySelectorAll('button[data-tag]');
+						
+
+						
+
+						//For each of them...
+
+						for(var i=0, l=buttons.length; i<l; i++)
+
+						{
+
+							//We bind the click event
+
+							buttons[i].addEventListener('click',function(e)
+
+							{
+
+								var tag = this.getAttribute('data-tag');
+
+								switch(tag)
+
+								{
+
+									case 'createLink':
+
+										var link = prompt('Please specify the link.');
+
+										if(link)
+
+										{
+
+											document.execCommand('createLink', false, link);
+
+										}
+
+									break;
+
+									
+
+									case 'insertImage':
+
+										var src = prompt('Please specify the link of the image.');
+
+										if(src)
+
+										{
+
+											document.execCommand('insertImage', false, src);
+
+										}
+
+									break;
+
+									
+
+									case 'heading':
+
+										try
+
+										{
+
+											document.execCommand(tag, false, this.getAttribute('data-value'));
+
+										}
+
+										catch(e)
+
+										{
+
+											//The browser doesn't support "heading" command, we use an alternative
+
+											document.execCommand('formatBlock', false, '<'+this.getAttribute('data-value')+'>');
+
+										}
+
+									break;
+
+
+									default:
+
+										document.execCommand(tag, false, this.getAttribute('data-value'));
+
+								}
+
+								e.preventDefault();
+
+							});
+
+						}
+
+					}			
+
+					return editor;
+
+				};
+
+				
+
+				makeWYSIWYG(document.getElementById('editor'));
+
+			};
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<article>
+
+			<section>
+
+				<div id="editor">
+
+					<h1>Ark12 online editor</h1>
+
+					<p>click on the <b>EDIT</b> button <ins>below</ins>. And let the <I>magic</I> begin!</p>
+					<p style="font-family: GoodDog"> gooddog </p>
+
+				</div>	
+
+			</section>
+
+		</article>
+
+	</body>
+
+</html>
