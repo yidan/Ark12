@@ -2,8 +2,22 @@
 <head>
 <title> Browser Based HTML Editor </title>
 <link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
-<script type="text/javascript" src="js/colorpicker.js"></script>
+
 <script type="text/javascript" src="js/font_editor.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="js/jquery.simple-color.min.js"></script>
+<script type="text/javascript">
+	$('.simple_color_custom').simpleColor({
+			cellWidth: 9,
+			cellHeight: 9,
+			border: '1px solid #333333',
+			buttonClass: 'button',
+			displayColorCode: true
+	$('input#alert_button').click( function() {
+		alert($('input.simple_color_custom')[0].value);
+				
+	});
+</script>
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
   <link type="text/css" rel="stylesheet" href="css/style.css" />
@@ -74,7 +88,7 @@
 						
 			<img alt="Ordered List" class="butClass" src="ordlist.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doOrdList()">
 			<img alt="Bulleted List" class="butClass" src="bullist.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doBulList()">
-			
+			<input class='simple_color' value='#cc3333'/> 
 			<img alt="Text Color" class="butClass" src="forecol.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doForeCol()">
 			<img alt="Background Color" class="butClass" src="bgcol.gif" onMouseOver="selOn(this)" onMouseOut="selOff(this)" onMouseDown="selDown(this)" onMouseUp="selUp(this)" onClick="doBackCol()">
 			
